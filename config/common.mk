@@ -79,7 +79,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     GoogleClock \
     Wallpapers \
-    ResurrectionStats
+    ResurrectionStats \
+    Firefox \
+    ViperFX \
+    OpenCamera
 
 # Cutout control overlays
 PRODUCT_PACKAGES += \
