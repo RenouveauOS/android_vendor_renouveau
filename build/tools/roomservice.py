@@ -3,6 +3,7 @@
 # Copyright (C) 2012-2015, SlimRoms Project
 # Copyright (C) 2016-2018, AOSiP
 # Copyright (C) 2018, Resurrection Remix
+# Copyright (C) 2019, Renouveau
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -32,10 +33,10 @@ DEBUG = False
 default_manifest = ".repo/manifest.xml"
 
 custom_local_manifest = ".repo/local_manifests/roomservice.xml"
-custom_default_revision = "pie"
-custom_dependencies = "rr.dependencies"
-org_manifest = "rr-d"  # leave empty if org is provided in manifest
-org_display = "ResurrectionRemix-Devices"  # needed for displaying
+custom_default_revision = "renouveau-9.0"
+custom_dependencies = "renouveau.dependencies"
+org_manifest = "renouveau"  # leave empty if org is provided in manifest
+org_display = "RenouveauOS"  # needed for displaying
 
 github_auth = None
 

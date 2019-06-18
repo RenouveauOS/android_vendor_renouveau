@@ -70,7 +70,7 @@ function breakfast()
     local variant=$2
     RR_DEVICES_ONLY="true"
     unset LUNCH_MENU_CHOICES
-    for f in `/bin/ls vendor/rr/vendorsetup.sh 2> /dev/null`
+    for f in `/bin/ls vendor/renouveau/vendorsetup.sh 2> /dev/null`
         do
             echo "including $f"
             . $f
@@ -959,7 +959,7 @@ alias cmkap='dopush cmka'
 
 function repopick() {
     T=$(gettop)
-    $T/vendor/rr/build/tools/repopick.py $@
+    $T/vendor/renouveau/build/tools/repopick.py $@
 }
 
 function fixup_common_out_dir() {
@@ -990,7 +990,7 @@ if [ -d $(gettop)/prebuilts/snapdragon-llvm/toolchains ]; then
             export SDCLANG=true
             export SDCLANG_PATH=$(gettop)/prebuilts/snapdragon-llvm/toolchains/llvm-Snapdragon_LLVM_for_Android_4.0/prebuilt/linux-x86_64/bin
             export SDCLANG_PATH_2=$(gettop)/prebuilts/snapdragon-llvm/toolchains/llvm-Snapdragon_LLVM_for_Android_4.0/prebuilt/linux-x86_64/bin
-            export SDCLANG_LTO_DEFS=$(gettop)/vendor/rr/build/core/sdllvm-lto-defs.mk
+            export SDCLANG_LTO_DEFS=$(gettop)/vendor/renouveau/build/core/sdllvm-lto-defs.mk
             ;;
     esac
 fi

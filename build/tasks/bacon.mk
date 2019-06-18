@@ -1,6 +1,7 @@
 # Copyright (C) 2017 Unlegacy-Android
 # Copyright (C) 2017 The LineageOS Project
 # Copyright (C) 2018 Resurrection Remix
+# Copyright (C) 2019 Renouveau
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,13 +16,13 @@
 # limitations under the License.
 
 # -----------------------------------------------------------------
-# Resurrection Remix OTA update package
+# Renouveau OTA update package
 
-RR_TARGET_PACKAGE := $(PRODUCT_OUT)/$(RR_VERSION).zip
+RENOUVEAU_TARGET_PACKAGE := $(PRODUCT_OUT)/$(PRODUCT_BUILD).zip
 
 .PHONY: bacon
 bacon: $(INTERNAL_OTA_PACKAGE_TARGET)
-	$(hide) mv $(INTERNAL_OTA_PACKAGE_TARGET) $(RR_TARGET_PACKAGE)
-	$(hide) $(MD5SUM) $(RR_TARGET_PACKAGE) | sed "s|$(PRODUCT_OUT)/||" > $(RR_TARGET_PACKAGE).md5sum
-	@echo "ResurrectionRemix build complete: $(RR_TARGET_PACKAGE)" >&2
-	$(hide) ./vendor/rr/tools/rr.sh
+	$(hide) mv $(INTERNAL_OTA_PACKAGE_TARGET) $(RENOUVEAU_TARGET_PACKAGE)
+	$(hide) $(MD5SUM) $(RENOUVEAU_TARGET_PACKAGE) | sed "s|$(PRODUCT_OUT)/||" > $(RENOUVEAU_TARGET_PACKAGE).md5sum
+	@echo "Renouveau build complete: $(RENOUVEAU_TARGET_PACKAGE)" >&2
+	$(hide) ./vendor/renouveau/tools/renouveau.sh

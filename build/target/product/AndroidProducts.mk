@@ -15,6 +15,6 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/rr_arm.mk \
-    $(LOCAL_DIR)/rr_arm64.mk \
-    $(LOCAL_DIR)/rr_x86.mk
+    $(LOCAL_DIR)/renouveau_arm.mk \
+    $(LOCAL_DIR)/renouveau_arm64.mk \
+    $(LOCAL_DIR)/renouveau_x86.mk

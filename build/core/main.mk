@@ -1,2 +1,2 @@
 # Include LineageOS versions
-include $(TOPDIR)vendor/rr/build/core/main_version.mk
+include $(TOPDIR)vendor/renouveau/build/core/main_version.mk

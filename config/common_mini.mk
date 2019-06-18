@@ -1,4 +1,4 @@
 # Inherit mini common Lineage stuff
-$(call inherit-product, vendor/rr/config/common.mk)
+$(call inherit-product, vendor/renouveau/config/common.mk)
 
 PRODUCT_SIZE := mini

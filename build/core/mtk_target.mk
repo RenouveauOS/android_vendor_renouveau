@@ -1,2 +1,2 @@
 # Bring in Mediatek helper macros
-include vendor/rr/build/core/mtk_utils.mk
+include vendor/renouveau/build/core/mtk_utils.mk

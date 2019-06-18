@@ -1,7 +1,7 @@
 # Allow vendor/extra to override any property by setting it first
 $(call inherit-product-if-exists, vendor/extra/product.mk)
 
-PRODUCT_BRAND ?= ResurrectionRemix
+PRODUCT_BRAND ?= Renouveau
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
@@ -36,35 +36,35 @@ endif
 
 # Backup Tool
 PRODUCT_COPY_FILES += \
-    vendor/rr/prebuilt/common/bin/backuptool.sh:install/bin/backuptool.sh \
-    vendor/rr/prebuilt/common/bin/backuptool.functions:install/bin/backuptool.functions \
-    vendor/rr/prebuilt/common/bin/50-lineage.sh:system/addon.d/50-lineage.sh \
-    vendor/rr/prebuilt/common/bin/blacklist:system/addon.d/blacklist
+    vendor/renouveau/prebuilt/common/bin/backuptool.sh:install/bin/backuptool.sh \
+    vendor/renouveau/prebuilt/common/bin/backuptool.functions:install/bin/backuptool.functions \
+    vendor/renouveau/prebuilt/common/bin/50-lineage.sh:system/addon.d/50-lineage.sh \
+    vendor/renouveau/prebuilt/common/bin/blacklist:system/addon.d/blacklist
 
 ifeq ($(AB_OTA_UPDATER),true)
 PRODUCT_COPY_FILES += \
-    vendor/rr/prebuilt/common/bin/backuptool_ab.sh:system/bin/backuptool_ab.sh \
-    vendor/rr/prebuilt/common/bin/backuptool_ab.functions:system/bin/backuptool_ab.functions \
-    vendor/rr/prebuilt/common/bin/backuptool_postinstall.sh:system/bin/backuptool_postinstall.sh
+    vendor/renouveau/prebuilt/common/bin/backuptool_ab.sh:system/bin/backuptool_ab.sh \
+    vendor/renouveau/prebuilt/common/bin/backuptool_ab.functions:system/bin/backuptool_ab.functions \
+    vendor/renouveau/prebuilt/common/bin/backuptool_postinstall.sh:system/bin/backuptool_postinstall.sh
 endif
 
 # Backup Services whitelist
 PRODUCT_COPY_FILES += \
-    vendor/rr/config/permissions/backup.xml:system/etc/sysconfig/backup.xml
+    vendor/renouveau/config/permissions/backup.xml:system/etc/sysconfig/backup.xml
 
 # Lineage-specific broadcast actions whitelist
 PRODUCT_COPY_FILES += \
-    vendor/rr/config/permissions/lineage-sysconfig.xml:system/etc/sysconfig/lineage-sysconfig.xml
+    vendor/renouveau/config/permissions/lineage-sysconfig.xml:system/etc/sysconfig/lineage-sysconfig.xml
 
 # init.d support
 PRODUCT_COPY_FILES += \
-    vendor/rr/prebuilt/common/etc/init.d/00banner:system/etc/init.d/00banner \
-    vendor/rr/prebuilt/common/bin/sysinit:system/bin/sysinit
+    vendor/renouveau/prebuilt/common/etc/init.d/00banner:system/etc/init.d/00banner \
+    vendor/renouveau/prebuilt/common/bin/sysinit:system/bin/sysinit
 
 ifneq ($(TARGET_BUILD_VARIANT),user)
 # userinit support
 PRODUCT_COPY_FILES += \
-    vendor/rr/prebuilt/common/etc/init.d/90userinit:system/etc/init.d/90userinit
+    vendor/renouveau/prebuilt/common/etc/init.d/90userinit:system/etc/init.d/90userinit
 endif
 
 # Copy over the changelog to the device
@@ -73,7 +73,7 @@ PRODUCT_COPY_FILES += \
 
 # Copy features.txt from the path
 PRODUCT_COPY_FILES += \
-    vendor/rr/Features.mkdn:system/etc/RR/Features.txt
+    vendor/renouveau/Features.mkdn:system/etc/RR/Features.txt
 
 # Included prebuilt apk's
 PRODUCT_PACKAGES += \
@@ -87,12 +87,12 @@ PRODUCT_PACKAGES += \
     StatusBarStock
 
 # Copy all Lineage-specific init rc files
-$(foreach f,$(wildcard vendor/rr/prebuilt/common/etc/init/*.rc),\
+$(foreach f,$(wildcard vendor/renouveau/prebuilt/common/etc/init/*.rc),\
 	$(eval PRODUCT_COPY_FILES += $(f):system/etc/init/$(notdir $f)))
 
 # Copy over added mimetype supported in libcore.net.MimeUtils
 PRODUCT_COPY_FILES += \
-    vendor/rr/prebuilt/common/lib/content-types.properties:system/lib/content-types.properties
+    vendor/renouveau/prebuilt/common/lib/content-types.properties:system/lib/content-types.properties
 
 # Enable SIP+VoIP on all targets
 PRODUCT_COPY_FILES += \
@@ -104,32 +104,32 @@ PRODUCT_COPY_FILES += \
 
 # This is Lineage!
 PRODUCT_COPY_FILES += \
-    vendor/rr/config/permissions/org.lineageos.android.xml:system/etc/permissions/org.lineageos.android.xml \
-    vendor/rr/config/permissions/privapp-permissions-lineage.xml:system/etc/permissions/privapp-permissions-lineage.xml \
-    vendor/rr/config/permissions/privapp-permissions-cm-legacy.xml:system/etc/permissions/privapp-permissions-cm-legacy.xml
+    vendor/renouveau/config/permissions/org.lineageos.android.xml:system/etc/permissions/org.lineageos.android.xml \
+    vendor/renouveau/config/permissions/privapp-permissions-lineage.xml:system/etc/permissions/privapp-permissions-lineage.xml \
+    vendor/renouveau/config/permissions/privapp-permissions-cm-legacy.xml:system/etc/permissions/privapp-permissions-cm-legacy.xml
 
 # Hidden API whitelist
 PRODUCT_COPY_FILES += \
-    vendor/rr/config/permissions/lineage-hiddenapi-package-whitelist.xml:system/etc/permissions/lineage-hiddenapi-package-whitelist.xml
+    vendor/renouveau/config/permissions/lineage-hiddenapi-package-whitelist.xml:system/etc/permissions/lineage-hiddenapi-package-whitelist.xml
 
 # Power whitelist
 PRODUCT_COPY_FILES += \
-    vendor/rr/config/permissions/lineage-power-whitelist.xml:system/etc/sysconfig/lineage-power-whitelist.xml
+    vendor/renouveau/config/permissions/lineage-power-whitelist.xml:system/etc/sysconfig/lineage-power-whitelist.xml
 
 # Include AOSP audio files
-include vendor/rr/config/aosp_audio.mk
+include vendor/renouveau/config/aosp_audio.mk
 
 # Include Lineage audio files
-include vendor/rr/config/lineage_audio.mk
+include vendor/renouveau/config/lineage_audio.mk
 
 ifneq ($(TARGET_DISABLE_LINEAGE_SDK), true)
 # Lineage SDK
-include vendor/rr/config/lineage_sdk_common.mk
+include vendor/renouveau/config/lineage_sdk_common.mk
 endif
 
 # TWRP
 ifeq ($(WITH_TWRP),true)
-include vendor/rr/config/twrp.mk
+include vendor/renouveau/config/twrp.mk
 endif
 
 # Do not include art debug targets
@@ -141,7 +141,7 @@ PRODUCT_ART_TARGET_INCLUDE_DEBUG_BUILD := false
 PRODUCT_MINIMIZE_JAVA_DEBUG_INFO := true
 
 # Bootanimation
-PRODUCT_COPY_FILES += vendor/rr/prebuilt/common/bootanimation/bootanimation.zip:system/media/bootanimation.zip
+PRODUCT_COPY_FILES += vendor/renouveau/prebuilt/common/bootanimation/bootanimation.zip:system/media/bootanimation.zip
 
 # Required RR packages
 PRODUCT_PACKAGES += \
@@ -289,11 +289,11 @@ PRODUCT_PACKAGES += \
 endif
 endif
 
-PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/rr/overlay
-DEVICE_PACKAGE_OVERLAYS += vendor/rr/overlay/common
+PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/renouveau/overlay
+DEVICE_PACKAGE_OVERLAYS += vendor/renouveau/overlay/common
 
 PRODUCT_EXTRA_RECOVERY_KEYS += \
-    vendor/rr/build/target/product/security/rr
+    vendor/renouveau/build/target/product/security/rr
 
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
--include vendor/rr/config/partner_gms.mk
+-include vendor/renouveau/config/partner_gms.mk

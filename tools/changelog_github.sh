@@ -25,7 +25,7 @@
 # input variables set the below the rest must be automatic
 source_tree="${ANDROID_BUILD_TOP}"; #path here must be inside home directory
 changelog_path_name=CHANGELOG.mkdn #changelog file path/name.extension
-source_name="Resurrection Remix Pie" #Name to display in changelog.md top before version
+source_name="Renouveau 9.0" #Name to display in changelog.md top before version
 # input variables end
 
 if [ -z ${source_tree} ]; then
@@ -45,7 +45,7 @@ else
 	echo ${cya}" ▼ Generating (for last $days_to_log days) github format changelog.."${txtrst}
 
 	echo >> $Changelog;
-	echo "$source_name Version $(grep PRODUCT_VERSION vendor/rr/build/core/main_version.mk | head -1 | cut -d= -f2 | cut -d' ' -f2) Changelog" >> $Changelog;
+	echo "$source_name Version $(grep PRODUCT_VERSION vendor/renouveau/build/core/main_version.mk | head -1 | cut -d= -f2 | cut -d' ' -f2) Changelog" >> $Changelog;
 	echo '===============' >> $Changelog;
 	echo >> $Changelog;
 
