@@ -299,7 +299,7 @@ def main():
         sys.exit()
 
     print("Device {0} not found. Attempting to retrieve device repository from "
-          "{1} Github (http://github.com/{1}).".format(device, org_display))
+          "{1} GitHub (http://github.com/{1}).".format(device, org_display))
 
     githubreq = urllib.request.Request(
         "https://api.github.com/search/repositories?"
