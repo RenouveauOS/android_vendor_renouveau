@@ -296,7 +296,7 @@ PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/renouveau/overlay
 DEVICE_PACKAGE_OVERLAYS += vendor/renouveau/overlay/common
 
 PRODUCT_EXTRA_RECOVERY_KEYS += \
-    vendor/renouveau/build/target/product/security/rr
+    vendor/renouveau/build/target/product/security/renouveau
 
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
 -include vendor/renouveau/config/partner_gms.mk
