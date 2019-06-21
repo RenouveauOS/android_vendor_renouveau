@@ -92,7 +92,8 @@ LOCAL_PRIVILEGED_MODULE    := true
 LOCAL_BUILT_MODULE_STEM    := package.apk
 LOCAL_CERTIFICATE          := PRESIGNED
 LOCAL_DEX_PREOPT           := true
-LOCAL_OVERRIDES_PACKAGES   := Snap
+LOCAL_OVERRIDES_PACKAGES   := Snap \
+                              Camera2
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)

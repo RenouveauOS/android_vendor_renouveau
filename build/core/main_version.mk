@@ -15,34 +15,44 @@ ADDITIONAL_BUILD_PROPERTIES += \
     rr.ota.version= $(shell date +%Y%m%d) \
     ro.rr.tag=$(shell grep "refs/tags" .repo/manifest.xml  | cut -d'"' -f2 | cut -d'/' -f3)
 
+# RR Platform Display Version
+ADDITIONAL_BUILD_PROPERTIES += \
+    ro.rr.display.version=$(PRODUCT_VERSION)
+
+# RR Platform Internal Version
+ADDITIONAL_BUILD_PROPERTIES += \
+    ro.rr.build.version.plat.rev=$(LINEAGE_PLATFORM_REV)
+
 # Renouveau System Version
 ADDITIONAL_BUILD_PROPERTIES += \
     ro.renouveau.version=$(PRODUCT_BUILD) \
     ro.renouveau.releasetype=$(RENOUVEAU_BUILDTYPE) \
-    ro.renouveau.build.version.=$(PRODUCT_VERSION) \
+    ro.renouveau.build.version=$(PRODUCT_VERSION) \
     renouveau.ota.version=$(shell date +%Y%m%d) \
     ro.renouveau.tag=$(shell grep "refs/tags" .repo/manifest.xml | cut -d'"' -f2 | cut -d'/' -f3) \
     ro.modversion=$(PRODUCT_VERSION) \
     ro.lineagelegal.url=https://lineageos.org/legal
 
-# RR Platform Display Version
-ADDITIONAL_BUILD_PROPERTIES += \
-    ro.rr.display.version=$(PRODUCT_VERSION)
 
 # Renouveau Platform Display Version
 ADDITIONAL_BUILD_PROPERTIES += \
     ro.renouveau.display.version=$(PRODUCT_VERSION)
+
+# Renouveau Platform Internal Version
+ADDITIONAL_BUILD_PROPERTIES += \
+    ro.renouveau.build.version.plat.rev=$(LINEAGE_PLATFORM_REV)
 
 # LineageOS Platform SDK Version
 ADDITIONAL_BUILD_PROPERTIES += \
     ro.rr.build.version.plat.sdk=$(LINEAGE_PLATFORM_SDK_VERSION) \
     ro.renouveau.build.version.plat.sdk=$(LINEAGE_PLATFORM_SDK_VERSION)
 
-# RR Platform Internal Version
+# Allow ADB debugging for experimental builds during the boot process
+ifeq ($(RENOUVEAU_BUILDTYPE),Experimental)
 ADDITIONAL_BUILD_PROPERTIES += \
-    ro.rr.build.version.plat.rev=$(LINEAGE_PLATFORM_REV)
-
-# Renouveau Platform Internal Version
-ADDITIONAL_BUILD_PROPERTIES += \
-    ro.renouveau.build.version.plat.rev=$(LINEAGE_PLATFORM_REV)
-
+	ro.secure=0 \
+	ro.debuggable=1 \
+	persist.service.adb.enable=1 \
+	persist.sys.usb.config=mtp,adb \
+	ro.adb.secure=0
+endif
