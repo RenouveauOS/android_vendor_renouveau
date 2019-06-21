@@ -214,7 +214,9 @@ PRODUCT_PACKAGES += \
     LineagePinkAccent \
     LineagePurpleAccent \
     LineageRedAccent \
-    LineageYellowAccent
+    LineageYellowAccent \
+    LineageRenouveauRedAccent \
+    LineageRenouveauPurpleAccent
 
 # Extra tools in RR
 PRODUCT_PACKAGES += \
