@@ -1,3 +1,9 @@
+Renouveau:
+ • Replaced AudioFX with ViperFX
+ • Replaced Camera2 and Snap with OpenCamera
+ • Replaced Jelly with Firefox
+
+ResurrectionRemix:
  • Redone RR Stats app
  • Implemented Lineage's updater app (allows auto flashing, even has A/B support)
  • Media art on lockscreen
