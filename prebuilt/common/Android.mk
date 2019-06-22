@@ -35,7 +35,7 @@ endif
 
 LOCAL_PREBUILT_MODULE_FILE := $(FINAL_APNS_FILE)
 
-# Prebuilt apk's included in RR builds
+# Prebuilt APKs included in Renouveau builds
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
