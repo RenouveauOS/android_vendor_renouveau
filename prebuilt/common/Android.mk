@@ -59,17 +59,6 @@ LOCAL_CERTIFICATE := PRESIGNED
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := ResurrectionStats
-LOCAL_MODULE_OWNER := rr
-LOCAL_SRC_FILES := apps/$(LOCAL_MODULE).apk
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_SUFFIX := .apk
-LOCAL_MODULE_CLASS := APPS
-LOCAL_CERTIFICATE := platform
-LOCAL_PRIVILEGED_MODULE := true
-include $(BUILD_PREBUILT)
-
-include $(CLEAR_VARS)
 LOCAL_MODULE               := Firefox
 LOCAL_SRC_FILES            := apps/$(LOCAL_MODULE).apk
 LOCAL_MODULE_TAGS          := optional
@@ -94,16 +83,6 @@ LOCAL_CERTIFICATE          := PRESIGNED
 LOCAL_DEX_PREOPT           := true
 LOCAL_OVERRIDES_PACKAGES   := Snap \
                               Camera2
-include $(BUILD_PREBUILT)
-
-include $(CLEAR_VARS)
-LOCAL_MODULE               := Substratum
-LOCAL_SRC_FILES            := apps/$(LOCAL_MODULE).apk
-LOCAL_MODULE_TAGS          := optional
-LOCAL_MODULE_CLASS         := APPS
-LOCAL_BUILT_MODULE_STEM    := package.apk
-LOCAL_CERTIFICATE          := PRESIGNED
-LOCAL_DEX_PREOPT           := false
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
