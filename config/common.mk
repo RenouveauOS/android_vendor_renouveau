@@ -150,7 +150,7 @@ PRODUCT_MINIMIZE_JAVA_DEBUG_INFO := true
 # Bootanimation
 PRODUCT_COPY_FILES += vendor/renouveau/prebuilt/common/bootanimation/bootanimation.zip:system/media/bootanimation.zip
 
-# Required RR packages
+# Required Renouveau packages
 PRODUCT_PACKAGES += \
     LineageParts \
     Development \
