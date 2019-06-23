@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+    <!-- Additional permissions on top of privapp-permissions-platform.xml -->
+    <privapp-permissions package="com.android.systemui">
+        <permission name="android.permission.FORCE_STOP_PACKAGES"/>
+        <permission name="android.permission.PACKAGE_USAGE_STATS"/>
+    </privapp-permissions>
+
+    <privapp-permissions package="org.omnirom.omnistyle">
+        <permission name="android.permission.CHANGE_OVERLAY_PACKAGES"/>
+    </privapp-permissions>
+
+</permissions>

@@ -111,6 +111,10 @@ PRODUCT_COPY_FILES += \
     vendor/renouveau/config/permissions/privapp-permissions-lineage.xml:system/etc/permissions/privapp-permissions-lineage.xml \
     vendor/renouveau/config/permissions/privapp-permissions-cm-legacy.xml:system/etc/permissions/privapp-permissions-cm-legacy.xml
 
+# This is Renouveau!
+PRODUCT_COPY_FILES += \
+    vendor/renouveau/config/permissions/privapp-permissions-renouveau.xml:system/etc/permissions/privapp-permissions-renouveau.xml
+
 # Hidden API whitelist
 PRODUCT_COPY_FILES += \
     vendor/renouveau/config/permissions/lineage-hiddenapi-package-whitelist.xml:system/etc/permissions/lineage-hiddenapi-package-whitelist.xml
