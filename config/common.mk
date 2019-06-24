@@ -75,14 +75,14 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     vendor/renouveau/Features.mkdn:system/etc/RR/Features.txt
 
-# Included prebuilt apk's
+# Included prebuilt APKs
 PRODUCT_PACKAGES += \
     GoogleClock \
     Wallpapers \
-    ResurrectionStats \
     Firefox \
     ViperFX \
-    OpenCamera
+    OpenCamera \
+    NiagaraLauncher
 
 # Cutout control overlays
 PRODUCT_PACKAGES += \
@@ -171,7 +171,7 @@ PRODUCT_PACKAGES += \
     PhotoTable \
     Terminal
 
-# Custom RR packages
+# Custom Renouveau packages
 PRODUCT_PACKAGES += \
     AudioFX \
     Backgrounds \
@@ -222,7 +222,7 @@ PRODUCT_PACKAGES += \
     LineageRenouveauRedAccent \
     LineageRenouveauPurpleAccent
 
-# Extra tools in RR
+# Extra tools in Renouveau
 PRODUCT_PACKAGES += \
     7z \
     awk \
