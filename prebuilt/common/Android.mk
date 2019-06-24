@@ -71,6 +71,7 @@ LOCAL_DEX_PREOPT           := false
 LOCAL_OVERRIDES_PACKAGES   := Jelly
 include $(BUILD_PREBUILT)
 
+# Issue thread permitting redistribution of Niagara: https://github.com/8bitPit/Niagara-Issues/issues/915
 include $(CLEAR_VARS)
 LOCAL_MODULE               := NiagaraLauncher
 LOCAL_SRC_FILES            := apps/$(LOCAL_MODULE).apk
