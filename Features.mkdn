@@ -1,7 +1,12 @@
 Renouveau:
+ • Migrated from AOSP 9.0.0_r40 to AOSP 9.0.0_r42
  • Replaced AudioFX with ViperFX
  • Replaced Camera2 and Snap with OpenCamera
  • Replaced Jelly with Firefox
+ • Added Renouveau Red and Renouveau Purple berry accents
+ • Added "Connected MAC Randomization" toggle to developer options
+ • Replaced Trebuchet with Niagara Launcher
+ • Added Renouveau OTA to Updater app
 
 ResurrectionRemix:
  • Redone RR Stats app
