@@ -16,7 +16,7 @@ on post-fs-data
     # Create /cache/logs for automated logcats, remove previous logcat, and start the persistent logcat service
     mkdir /cache/logs 0770 system cache
     rm /cache/logs/logcat
-    #start persistentLogcat
+    start persistentLogcat
 
 on boot
     # Persistent properties (only created if persist exists)
@@ -42,4 +42,3 @@ service bugreport /system/bin/dumpstate -d -p -B -z \
 service persistentLogcat /system/bin/logcat -r 100024 -n 1 -b default -f /cache/logs/logcat
     user root
     disabled
-    keycodes 114 115
