@@ -211,6 +211,25 @@ function prefix_match_file() {
 }
 
 #
+# suffix_match_file:
+#
+# $1: the suffix to match on
+# $2: the file to match the suffix for
+#
+# Internal function which returns true if a filename contains the
+# specified suffix.
+#
+function suffix_match_file() {
+    local SUFFIX="$1"
+    local FILE="$2"
+    if [[ "$FILE" = *"$SUFFIX" ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+#
 # truncate_file
 #
 # $1: the filename to truncate
@@ -795,16 +814,16 @@ function oat2dex() {
     local HOST="$(uname)"
 
     if [ -z "$BAKSMALIJAR" ] || [ -z "$SMALIJAR" ]; then
-        export BAKSMALIJAR="$LINEAGE_ROOT"/vendor/lineage/build/tools/smali/baksmali.jar
-        export SMALIJAR="$LINEAGE_ROOT"/vendor/lineage/build/tools/smali/smali.jar
+        export BAKSMALIJAR="$LINEAGE_ROOT"/vendor/rr/build/tools/smali/baksmali.jar
+        export SMALIJAR="$LINEAGE_ROOT"/vendor/rr/build/tools/smali/smali.jar
     fi
 
     if [ -z "$VDEXEXTRACTOR" ]; then
-        export VDEXEXTRACTOR="$LINEAGE_ROOT"/vendor/lineage/build/tools/"$HOST"/vdexExtractor
+        export VDEXEXTRACTOR="$LINEAGE_ROOT"/vendor/rr/build/tools/"$HOST"/vdexExtractor
     fi
 
     if [ -z "$CDEXCONVERTER" ]; then
-        export CDEXCONVERTER="$LINEAGE_ROOT"/vendor/lineage/build/tools/"$HOST"/compact_dex_converter
+        export CDEXCONVERTER="$LINEAGE_ROOT"/vendor/rr/build/tools/"$HOST"/compact_dex_converter
     fi
 
     # Extract existing boot.oats to the temp folder
@@ -841,13 +860,17 @@ function oat2dex() {
         if get_file "$OAT" "$TMPDIR" "$SRC"; then
             if get_file "$VDEX" "$TMPDIR" "$SRC"; then
                 "$VDEXEXTRACTOR" -o "$TMPDIR/" -i "$TMPDIR/$(basename "$VDEX")" > /dev/null
-                # Check if we have to deal with CompactDex
-                if [ -f "$TMPDIR/$(basename "${OEM_TARGET%.*}")_classes.cdex" ]; then
-                    "$CDEXCONVERTER" "$TMPDIR/$(basename "${OEM_TARGET%.*}")_classes.cdex" &> /dev/null
-                    mv "$TMPDIR/$(basename "${OEM_TARGET%.*}")_classes.cdex.new" "$TMPDIR/classes.dex"
-                else
-                    mv "$TMPDIR/$(basename "${OEM_TARGET%.*}")_classes.dex" "$TMPDIR/classes.dex"
-                fi
+                CLASSES=$(ls "$TMPDIR/$(basename "${OEM_TARGET%.*}")_classes"*)
+                for CLASS in $CLASSES; do
+                    NEWCLASS=$(echo "$CLASS" | sed 's/.*_//;s/cdex/dex/')
+                    # Check if we have to deal with CompactDex
+                    if [[ "$CLASS" == *.cdex ]]; then
+                        "$CDEXCONVERTER" "$CLASS" &>/dev/null
+                        mv "$CLASS.new" "$TMPDIR/$NEWCLASS"
+                    else
+                        mv "$CLASS" "$TMPDIR/$NEWCLASS"
+                    fi
+                done
             else
                 java -jar "$BAKSMALIJAR" deodex -o "$TMPDIR/dexout" -b "$BOOTOAT" -d "$TMPDIR" "$TMPDIR/$(basename "$OAT")"
                 java -jar "$SMALIJAR" assemble "$TMPDIR/dexout" -o "$TMPDIR/classes.dex"
@@ -862,13 +885,17 @@ function oat2dex() {
             # fallback to boot.oat if vdex is not available
             if get_file "$JARVDEX" "$TMPDIR" "$SRC"; then
                 "$VDEXEXTRACTOR" -o "$TMPDIR/" -i "$TMPDIR/$(basename "$JARVDEX")" > /dev/null
-                # Check if we have to deal with CompactDex
-                if [ -f "$TMPDIR/$(basename "${JARVDEX%.*}")_classes.cdex" ]; then
-                    "$CDEXCONVERTER" "$TMPDIR/$(basename "${JARVDEX%.*}")_classes.cdex" &> /dev/null
-                    mv "$TMPDIR/$(basename "${JARVDEX%.*}")_classes.cdex.new" "$TMPDIR/classes.dex"
-                else
-                    mv "$TMPDIR/$(basename "${JARVDEX%.*}")_classes.dex" "$TMPDIR/classes.dex"
-                fi
+                CLASSES=$(ls "$TMPDIR/$(basename "${JARVDEX%.*}")_classes"*)
+                for CLASS in $CLASSES; do
+                    NEWCLASS=$(echo "$CLASS" | sed 's/.*_//;s/cdex/dex/')
+                    # Check if we have to deal with CompactDex
+                    if [[ "$CLASS" == *.cdex ]]; then
+                        "$CDEXCONVERTER" "$CLASS" &>/dev/null
+                        mv "$CLASS.new" "$TMPDIR/$NEWCLASS"
+                    else
+                        mv "$CLASS" "$TMPDIR/$NEWCLASS"
+                    fi
+                done
             else
                 java -jar "$BAKSMALIJAR" deodex -o "$TMPDIR/dexout" -b "$BOOTOAT" -d "$TMPDIR" "$JAROAT/$OEM_TARGET"
                 java -jar "$SMALIJAR" assemble "$TMPDIR/dexout" -o "$TMPDIR/classes.dex"
@@ -1184,8 +1211,8 @@ function extract() {
         if [[ "$FULLY_DEODEXED" -ne "1" && "${VENDOR_REPO_FILE}" =~ .(apk|jar)$ ]]; then
             oat2dex "${VENDOR_REPO_FILE}" "${SRC_FILE}" "$SRC"
             if [ -f "$TMPDIR/classes.dex" ]; then
-                zip -gjq "${VENDOR_REPO_FILE}" "$TMPDIR/classes.dex"
-                rm "$TMPDIR/classes.dex"
+                zip -gjq "${VENDOR_REPO_FILE}" "$TMPDIR/classes"*
+                rm "$TMPDIR/classes"*
                 printf '    (updated %s from odex files)\n' "${SRC_FILE}"
             fi
         elif [[ "${VENDOR_REPO_FILE}" =~ .xml$ ]]; then
@@ -1267,4 +1294,95 @@ function extract_firmware() {
         cp "$SRC/$FILE" "$OUTPUT_DIR/$FILE"
         chmod 644 "$OUTPUT_DIR/$FILE"
     done
+}
+
+function extract_img_data() {
+    local image_file="$1"
+    local out_dir="$2"
+    local logFile="$TMPDIR/debugfs.log"
+
+    if [ ! -d "$out_dir" ]; then
+        mkdir -p "$out_dir"
+    fi
+
+    if [[ "$HOST_OS" == "Darwin" ]]; then
+        debugfs -R "rdump / \"$out_dir\"" "$image_file" &> "$logFile" || {
+            echo "[-] Failed to extract data from '$image_file'"
+            abort 1
+        }
+    else
+        debugfs -R 'ls -p' "$image_file" 2>/dev/null | cut -d '/' -f6 | while read -r entry
+        do
+            debugfs -R "rdump \"$entry\" \"$out_dir\"" "$image_file" >> "$logFile" 2>&1 || {
+                echo "[-] Failed to extract data from '$image_file'"
+                abort 1
+            }
+        done
+    fi
+
+    local symlink_err="rdump: Attempt to read block from filesystem resulted in short read while reading symlink"
+    if grep -Fq "$symlink_err" "$logFile"; then
+        echo "[-] Symlinks have not been properly processed from $image_file"
+        echo "[!] If you don't have a compatible debugfs version, modify 'execute-all.sh' to disable 'USE_DEBUGFS' flag"
+        abort 1
+    fi
+}
+
+declare -ra VENDOR_SKIP_FILES=(
+  "bin/toybox_vendor"
+  "bin/toolbox"
+  "bin/grep"
+  "build.prop"
+  "compatibility_matrix.xml"
+  "default.prop"
+  "etc/NOTICE.xml.gz"
+  "etc/vintf/compatibility_matrix.xml"
+  "etc/vintf/manifest.xml"
+  "etc/wifi/wpa_supplicant.conf"
+  "manifest.xml"
+  "overlay/DisplayCutoutEmulationCorner/DisplayCutoutEmulationCornerOverlay.apk"
+  "overlay/DisplayCutoutEmulationDouble/DisplayCutoutEmulationDoubleOverlay.apk"
+  "overlay/DisplayCutoutEmulationTall/DisplayCutoutEmulationTallOverlay.apk"
+  "overlay/DisplayCutoutNoCutout/NoCutoutOverlay.apk"
+  "overlay/framework-res__auto_generated_rro.apk"
+  "overlay/SysuiDarkTheme/SysuiDarkThemeOverlay.apk"
+)
+
+function array_contains() {
+    local element
+    for element in "${@:2}"; do [[ "$element" == "$1" ]] && return 0; done
+    return 1
+}
+
+function generate_prop_list_from_image() {
+    local image_file="$1"
+    local image_dir="$TMPDIR/image-temp"
+    local output_list="$2"
+    local output_list_tmp="$TMPDIR/_proprietary-blobs.txt"
+    local -n skipped_vendor_files="$3"
+
+    extract_img_data "$image_file" "$image_dir"
+
+    find "$image_dir" -not -type d | sed "s#^$image_dir/##" | while read -r FILE
+    do
+        # Skip VENDOR_SKIP_FILES since it will be re-generated at build time
+        if array_contains "$FILE" "${VENDOR_SKIP_FILES[@]}"; then
+            continue
+        fi
+        # Skip device defined skipped files since they will be re-generated at build time
+        if array_contains "$FILE" "${skipped_vendor_files[@]}"; then
+            continue
+        fi
+        if suffix_match_file ".apk" "$FILE" ; then
+            echo "-vendor/$FILE" >> "$output_list_tmp"
+        else
+            echo "vendor/$FILE" >> "$output_list_tmp"
+        fi
+    done
+
+    # Sort merged file with all lists
+    sort -u "$output_list_tmp" > "$output_list"
+
+    # Clean-up
+    rm -f "$output_list_tmp"
 }
