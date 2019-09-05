@@ -111,3 +111,6 @@ LOCAL_CERTIFICATE          := PRESIGNED
 LOCAL_DEX_PREOPT           := false
 LOCAL_OVERRIDES_PACKAGES   := AudioFX
 include $(BUILD_PREBUILT)
+
+# ViperFX driver
+PRODUCT_COPY_FILES += $(LOCAL_PATH)/vendor/lib/soundfx/libv4a_fx.so:system/vendor/lib/soundfx/libv4a_fx.so
