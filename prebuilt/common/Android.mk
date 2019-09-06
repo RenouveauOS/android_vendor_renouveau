@@ -113,4 +113,11 @@ LOCAL_OVERRIDES_PACKAGES   := AudioFX
 include $(BUILD_PREBUILT)
 
 # ViperFX driver
-PRODUCT_COPY_FILES += $(LOCAL_PATH)/vendor/lib/soundfx/libv4a_fx.so:system/vendor/lib/soundfx/libv4a_fx.so
+include $(CLEAR_VARS)
+LOCAL_MODULE               := libv4a_fx
+LOCAL_SRC_FILES            := vendor/lib/soundfx/libv4a_fx.so
+LOCAL_MODULE_TAGS          := optional
+LOCAL_MODULE_CLASS         := SHARED_LIBRARIES
+LOCAL_MODULE_SUFFIX        := .so
+LOCAL_MODLE_PATH           := system/vendor/lib/soundfx
+include $(BUILD_PREBUILT)
