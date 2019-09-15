@@ -14,7 +14,11 @@
 # limitations under the License.
 #
 
+#PRODUCT_MAKEFILES := \
+#    $(LOCAL_DIR)/renouveau_arm.mk \
+#    $(LOCAL_DIR)/renouveau_arm64.mk \
+#    $(LOCAL_DIR)/renouveau_x86.mk
+
 PRODUCT_MAKEFILES := \
     $(LOCAL_DIR)/renouveau_arm.mk \
-    $(LOCAL_DIR)/renouveau_arm64.mk \
-    $(LOCAL_DIR)/renouveau_x86.mk
+    $(LOCAL_DIR)/renouveau_arm64.mk

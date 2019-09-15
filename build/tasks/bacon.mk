@@ -18,6 +18,7 @@
 # -----------------------------------------------------------------
 # Renouveau OTA update package
 
+INTERNAL_OTA_PACKAGE_TARGET ?= $(PRODUCT_OUT)/$(TARGET_PRODUCT)-ota-$(FILE_NAME_TAG).zip
 RENOUVEAU_TARGET_PACKAGE := $(PRODUCT_OUT)/$(PRODUCT_BUILD).zip
 
 .PHONY: bacon
