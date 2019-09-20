@@ -5,4 +5,4 @@ PRODUCT_SIZE := full
 
 # Recorder
 PRODUCT_PACKAGES += \
-    Recorder
+    Recorder \

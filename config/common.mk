@@ -129,6 +129,10 @@ include vendor/renouveau/config/aosp_audio.mk
 # Include Lineage audio files
 include vendor/renouveau/config/lineage_audio.mk
 
+# Include ViperFX driver
+PRODUCT_COPY_FILES += \
+    vendor/renouveau/prebuilt/common/vendor/lib/soundfx/libv4a_fx.so:system/vendor/lib/soundfx/libv4a_fx.so
+
 ifneq ($(TARGET_DISABLE_LINEAGE_SDK), true)
 # Lineage SDK
 include vendor/renouveau/config/lineage_sdk_common.mk
